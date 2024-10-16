@@ -2,15 +2,16 @@ from dash import Dash, html, dcc
 import plotly.express as px
 import pandas as pd
 import numpy as np
-from Heap_Sort import media
+from Heap_Sort import media_heap_sort
+from SelectionSort import media_selection_sort
 
 # Exemplo de DataFrame com dados de diferentes algoritmos
 quantidade_dados = 5000
 
 # Simulando tempos de execução para diferentes algoritmos
 algoritmos = {
-    'Bubble Sort': np.linspace(0, 1.0, quantidade_dados),
-    'Heap Sort': np.linspace(0, media(), quantidade_dados),
+    'Selection Sort': np.linspace(0, media_selection_sort(), quantidade_dados),
+    'Heap Sort': np.linspace(0, media_heap_sort(), quantidade_dados),
     'Quick Sort': np.linspace(0, 0.2, quantidade_dados)
 }
 

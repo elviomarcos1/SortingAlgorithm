@@ -29,7 +29,7 @@ def heapsort(arr):
         heapfy(arr, i, 0)
 
 
-def media():
+def media_heap_sort():
 
     lista_tempo = []
 
@@ -38,7 +38,7 @@ def media():
         heapsort(lista_datas)
         tempo_fim = time.time()
 
-        lista_tempo.append(tempo_inicio - tempo_fim)
+        lista_tempo.append(tempo_fim - tempo_inicio)
 
     return round(sum(lista_tempo) / len(lista_tempo), 2)
 
