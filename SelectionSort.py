@@ -1,8 +1,6 @@
 from Create_Data import create_data
 import time
 
-lista_de_datas = create_data(5001)
-
 def selection_sort(lista):
   """ Ordena uma lista. Custo O(n²) """
   
@@ -29,15 +27,12 @@ def selection_sort(lista):
 
   return lista 
 
-def media_selection_sort():
+def media_selection_sort(tamanho):
 
-    lista_tempo = []
+  lista_de_datas = create_data(tamanho)
+  tempo_inicio = time.time()
+  selection_sort(lista_de_datas)
+  tempo_fim = time.time()
+  tempo_final = (tempo_fim - tempo_inicio)
 
-    for i in range(10):
-        tempo_inicio = time.time()
-        selection_sort(lista_de_datas)
-        tempo_fim = time.time()
-
-        lista_tempo.append(tempo_fim - tempo_inicio)
-
-    return round(sum(lista_tempo) / len(lista_tempo), 2)
+  return tempo_final

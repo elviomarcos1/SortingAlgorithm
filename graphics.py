@@ -3,44 +3,43 @@ import plotly.express as px
 import pandas as pd
 import numpy as np
 from Heap_Sort import media_heap_sort
-from SelectionSort import media_selection_sort
+from SelectionSort import media_selection_sort  # Certifique-se de que isso também esteja ajustado
 
-# Exemplo de DataFrame com dados de diferentes algoritmos
-quantidade_dados = 5000
+# Definindo tamanhos de dados
+quantidades = np.arange(1000, 6000, 1000)
 
-# Simulando tempos de execução para diferentes algoritmos
-algoritmos = {
-    'Selection Sort': np.linspace(0, media_selection_sort(), quantidade_dados),
-    'Heap Sort': np.linspace(0, media_heap_sort(), quantidade_dados),
-    'Quick Sort': np.linspace(0, 0.2, quantidade_dados)
-}
+# Dicionário para armazenar os tempos de execução
+tempos_heap_sort = []
+tempos_selection_sort = []
+
+for tamanho in quantidades:
+    tempos_heap_sort.append(media_heap_sort(tamanho))
+    tempos_selection_sort.append(media_selection_sort(tamanho))  # Assegure-se que essa função também está adaptada
 
 # Criando um DataFrame
-df_list = []
-for alg, tempos in algoritmos.items():
-    df_list.append(pd.DataFrame({
-        'quantidade_dados': np.arange(1, quantidade_dados + 1),
-        'tempo_algoritmo': tempos,
-        'algoritmo': alg
-    }))
+df = pd.DataFrame({
+    'quantidade_dados': quantidades,
+    'tempo_heap_sort': tempos_heap_sort,
+    'tempo_selection_sort': tempos_selection_sort
+})
 
-df = pd.concat(df_list)
+# Transformando o DataFrame para um formato longo para plotagem
+df_melted = df.melt(id_vars='quantidade_dados', 
+                    value_vars=['tempo_heap_sort', 'tempo_selection_sort'], 
+                    var_name='algoritmo', 
+                    value_name='tempo_algoritmo')
 
+# Criando o aplicativo Dash
 app = Dash()
 
 app.layout = [
     html.H1(children='Comparação de Tempo de Execução dos Algoritmos', style={'textAlign': 'center'}),
-    dcc.Graph(id='graph-content')
+    dcc.Graph(id='graph-content', figure=px.line(df_melted, 
+                                                   x='quantidade_dados', 
+                                                   y='tempo_algoritmo', 
+                                                   color='algoritmo',
+                                                   title='Comparação de Tempo de Execução dos Algoritmos'))
 ]
-
-# Criar o gráfico
-fig = px.line(df, x='quantidade_dados', y='tempo_algoritmo', color='algoritmo',
-               title='Comparação de Tempo de Execução dos Algoritmos')
-
-# Ajuste do gráfico
-fig.update_traces(mode='lines')
-
-app.layout[1] = dcc.Graph(figure=fig)
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -1,8 +1,6 @@
 from Create_Data import create_data
 import time
 
-lista_datas = create_data(5001)
-
 def heapsort(arr):
     n = len(arr)
 
@@ -29,16 +27,13 @@ def heapsort(arr):
         heapfy(arr, i, 0)
 
 
-def media_heap_sort():
+def media_heap_sort(tamanho):
 
-    lista_tempo = []
+    lista_datas = create_data(tamanho)
+    tempo_inicio = time.time()
+    heapsort(lista_datas)
+    tempo_fim = time.time()
+    tempo_final = (tempo_fim - tempo_inicio)
 
-    for i in range(10):
-        tempo_inicio = time.time()
-        heapsort(lista_datas)
-        tempo_fim = time.time()
-
-        lista_tempo.append(tempo_fim - tempo_inicio)
-
-    return round(sum(lista_tempo) / len(lista_tempo), 2)
+    return tempo_final
 
