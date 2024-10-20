@@ -1,4 +1,4 @@
-from Create_Data import create_data;
+from Data.Create_Data import create_data;
 import time
 
 def insertion_sort( lista ):

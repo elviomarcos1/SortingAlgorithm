@@ -2,9 +2,9 @@ from dash import Dash, html, dcc
 import plotly.graph_objects as go
 import pandas as pd
 import numpy as np
-from Heap_Sort import media_heap_sort
-from SelectionSort import media_selection_sort
-from Insertion_Sort import Media_Insertion_Sort
+from Algoritimos.Heap_Sort import media_heap_sort
+from Algoritimos.SelectionSort import media_selection_sort
+from Algoritimos.Insertion_Sort import Media_Insertion_Sort
 
 # Definindo tamanhos de dados de 200 em 200
 quantidades = np.arange(200, 5000 + 1, 200)
