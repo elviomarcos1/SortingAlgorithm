@@ -15,9 +15,9 @@ tempos_selection_sort = []
 tempos_insertion_sort = []
 
 for tamanho in quantidades:
-    tempos_heap_sort.append(media_heap_sort(tamanho) * 1000)  # Converte para milissegundos
-    tempos_selection_sort.append(media_selection_sort(tamanho) * 1000)  # Converte para milissegundos
-    tempos_insertion_sort.append(Media_Insertion_Sort(tamanho) * 1000)  # Converte para milissegundos
+    tempos_heap_sort.append(media_heap_sort(tamanho))
+    tempos_selection_sort.append(media_selection_sort(tamanho))
+    tempos_insertion_sort.append(Media_Insertion_Sort(tamanho))
 
 # Criando um DataFrame
 df = pd.DataFrame({

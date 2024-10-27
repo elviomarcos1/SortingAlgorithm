@@ -1,5 +1,6 @@
 from Data.Create_Data import create_data
 import time
+from datetime import timedelta
 
 def selection_sort(lista):
   """ Ordena uma lista. Custo O(n²) """
@@ -30,9 +31,8 @@ def selection_sort(lista):
 def media_selection_sort(tamanho):
 
   lista_de_datas = create_data(tamanho)
-  tempo_inicio = time.time()
+  tempo_inicio = time.perf_counter()
   selection_sort(lista_de_datas)
-  tempo_fim = time.time()
-  tempo_final = (tempo_fim - tempo_inicio)
+  tempo_fim = time.perf_counter()
 
-  return tempo_final
+  return timedelta(seconds= tempo_fim - tempo_inicio)

@@ -1,5 +1,6 @@
 from Data.Create_Data import create_data;
 import time
+from datetime import timedelta
 
 def insertion_sort( lista ):
   for i in range( 1, len( lista ) ):
@@ -13,11 +14,11 @@ def insertion_sort( lista ):
 
 def Media_Insertion_Sort(tamanho):
    lista_datas = create_data(tamanho)
-   tempo_inicial = time.time()
+   tempo_inicial = time.perf_counter()
    insertion_sort(lista_datas)
-   tempo_fim = time.time()
-   tempo_final = (tempo_fim - tempo_inicial)
-   return tempo_final
+   tempo_fim = time.perf_counter()
+
+   return timedelta(seconds=tempo_fim - tempo_inicial)
 
 
    
