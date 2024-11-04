@@ -2,17 +2,20 @@ import time
 import random
 import plotly.express as px
 import pandas as pd
+import numpy as np
+from datetime import timedelta
+from datetime import datetime
 from Data.Create_Data import gerar_datas
 from Algoritimos.Heap_Sort import heap_sort
 from Algoritimos.SelectionSort import selection_sort
 from Algoritimos.Insertion_Sort import insertion_sort
-from datetime import datetime
-import numpy as np
+
+
 
 def medir_tempo(algoritmo, dados):
-    start_time = time.time()
+    start_time = time.perf_counter() 
     algoritmo(dados)
-    return time.time() - start_time
+    return time.perf_counter()  - start_time
 
 def main():
     tamanhos = list(range(200, 5200, 200))
