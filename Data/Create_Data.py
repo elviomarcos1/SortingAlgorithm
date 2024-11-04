@@ -1,25 +1,22 @@
 import random
-from datetime import datetime
-import calendar
+from datetime import datetime, timedelta
 
-def create_data(valordata):
-    ano_inicial = 1990
-    ano_final = 2024
-    lista_de_datas = []
+def gerar_datas(qtd):
+    datas = []
+    for _ in range(qtd):
+        # Define um intervalo de tempo
+        data_inicial = datetime(2000, 1, 1)
+        delta = random.randint(0, 365 * 20)  # até 20 anos de intervalo
+        data_aleatoria = data_inicial + timedelta(days=delta)
+        # Adiciona hora, minuto e segundo aleatórios
+        data_aleatoria += timedelta(hours=random.randint(0, 23),
+                                    minutes=random.randint(0, 59),
+                                    seconds=random.randint(0, 59))
+        datas.append(data_aleatoria.strftime('%d/%m/%Y %H:%M:%S'))
+    return datas
 
-    for i in range(valordata):
-        ano_random = random.randint(ano_inicial, ano_final)
-        mes_random = random.randint(1, 12)
-        dia_mes = calendar.monthrange(ano_random, mes_random)[1]
-        dia_random = random.randint(1, dia_mes)
-        data = datetime(ano_random, mes_random, dia_random)
-        
-        hora_random = random.randint(0, 23)
-        minuto_random = random.randint(0, 59)
-        segundos_random = random.randint(0, 59)
-
-        data_final = data.replace(hour = hora_random, minute = minuto_random, second = segundos_random)
-        data_formatada = data_final.strftime('%Y-%m-%d %H-%M-%S')
-        lista_de_datas.append(data_formatada)
-    
-    return lista_de_datas
+if __name__ == "__main__":
+    qtd = int(input("Informe a quantidade de datas a serem geradas: "))
+    datas_geradas = gerar_datas(qtd)
+    for data in datas_geradas:
+        print(data)

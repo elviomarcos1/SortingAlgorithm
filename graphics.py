@@ -1,78 +1,65 @@
-from dash import Dash, html, dcc
-import plotly.graph_objects as go
+import time
+import random
+import plotly.express as px
 import pandas as pd
+from Data.Create_Data import gerar_datas
+from Algoritimos.Heap_Sort import heap_sort
+from Algoritimos.SelectionSort import selection_sort
+from Algoritimos.Insertion_Sort import insertion_sort
+from datetime import datetime
 import numpy as np
-from Algoritimos.Heap_Sort import media_heap_sort
-from Algoritimos.SelectionSort import media_selection_sort
-from Algoritimos.Insertion_Sort import Media_Insertion_Sort
 
-# Definindo tamanhos de dados de 200 em 200
-quantidades = np.arange(200, 5000 + 1, 200)
+def medir_tempo(algoritmo, dados):
+    start_time = time.time()
+    algoritmo(dados)
+    return time.time() - start_time
 
-# Dicionário para armazenar os tempos de execução em milissegundos
-tempos_heap_sort = []
-tempos_selection_sort = []
-tempos_insertion_sort = []
+def main():
+    tamanhos = list(range(200, 5200, 200))
+    tempos_heap = []
+    tempos_selection = []
+    tempos_insertion = []
 
-for tamanho in quantidades:
-    tempos_heap_sort.append(media_heap_sort(tamanho))
-    tempos_selection_sort.append(media_selection_sort(tamanho))
-    tempos_insertion_sort.append(Media_Insertion_Sort(tamanho))
+    for tamanho in tamanhos:
+        datas = gerar_datas(tamanho)
+        dados = [datetime.strptime(data, '%d/%m/%Y %H:%M:%S') for data in datas]
+        
+        tempos_heap.append(medir_tempo(heap_sort, dados.copy()))
+        tempos_selection.append(medir_tempo(selection_sort, dados.copy()))
+        tempos_insertion.append(medir_tempo(insertion_sort, dados.copy()))
 
-# Criando um DataFrame
-df = pd.DataFrame({
-    'quantidade_dados': quantidades,
-    'Heap Sort (O(n log n))': tempos_heap_sort,
-    'Selection Sort (O(n^2))': tempos_selection_sort,
-    'Insertion Sort (O(n^2))': tempos_insertion_sort
-})
+    resultados = pd.DataFrame({
+        'Tamanho': tamanhos,
+        'Heap Sort': tempos_heap,
+        'Selection Sort': tempos_selection,
+        'Insertion Sort': tempos_insertion
+    })
 
-# Criando o gráfico com plotly.graph_objects para maior controle
-fig = go.Figure()
+    # Criar o gráfico
+    fig = px.scatter(resultados, x='Tamanho', y=resultados.columns[1:], 
+                     title='Tempo de Execução dos Algoritmos de Ordenação',
+                     labels={'value': 'Tempo (s)', 'Tamanho': 'Quantidade de Datas'},
+                     log_y=True)
 
-# Adicionando as linhas para cada algoritmo
-fig.add_trace(go.Scatter(x=df['quantidade_dados'], y=df['Heap Sort (O(n log n))'],
-                         mode='lines', name='Heap Sort (O(n log n))',
-                         line=dict(color='orange', width=2)))
-fig.add_trace(go.Scatter(x=df['quantidade_dados'], y=df['Selection Sort (O(n^2))'],
-                         mode='lines', name='Selection Sort (O(n^2))',
-                         line=dict(color='blue', width=2)))
-fig.add_trace(go.Scatter(x=df['quantidade_dados'], y=df['Insertion Sort (O(n^2))'],
-                         mode='lines', name='Insertion Sort (O(n^2))',
-                         line=dict(color='green', width=2)))
+    # Ajustar a linha de fit de grau 2
+    for coluna in resultados.columns[1:]:
+        x = resultados['Tamanho']
+        y = resultados[coluna]
+        
+        # Calcular os coeficientes do polinômio de ajuste (grau 2 para quadrático)
+        coeficientes = np.polyfit(x, y, 2)
+        polynomial = np.poly1d(coeficientes)
+        
+        # Gerar valores de y para a linha de ajuste
+        y_fit = polynomial(x)
+        
+        # Adicionar a linha de ajuste ao gráfico
+        fig.add_scatter(x=x, y=y_fit, mode='lines', name=f'Fit {coluna}', line=dict(dash='dash'))
 
-# Configurações do layout do gráfico
-fig.update_layout(
-    title='Comparação de Algoritmos de Ordenação (Escala Semilogarítmica)',
-    xaxis_title='Número de Dados Aleatórios',
-    yaxis_title='Tempo de Execução (Milissegundos)',
-    yaxis_type="log",  # Escala logarítmica no eixo Y
-    font=dict(family="Arial", size=12),
-    legend=dict(yanchor="top", y=0.99, xanchor="left", x=0.01),
-    plot_bgcolor="white",
-    xaxis=dict(showgrid=True, gridwidth=1, gridcolor='gray', dtick=200),
-    yaxis=dict(showgrid=True, gridwidth=1, gridcolor='gray'),
-    margin=dict(l=40, r=40, t=40, b=40),
-    height=600  # Aumentando a altura do gráfico
-)
+    # Configurar o eixo x para exibir de 200 em 200
+    fig.update_xaxes(dtick=200)
 
-# Configurando as linhas de grade
-fig.update_xaxes(showline=True, linewidth=1, linecolor='black', mirror=True)
-fig.update_yaxes(showline=True, linewidth=1, linecolor='black', mirror=True)
+    fig.show()
 
-# Criando o aplicativo Dash
-app = Dash()
-
-app.layout = html.Div(
-    children=[
-        html.H1(children='Comparação de Algoritmos de Ordenação (Escala Semilogarítmica)', style={'textAlign': 'center'}),
-        html.Div(
-            dcc.Graph(id='graph-content', figure=fig, style={'width': '100%'}),  # Ocupa 100% da largura da tela
-            style={'display': 'flex', 'justify-content': 'center', 'width': '100%'}  # Centraliza e ajusta à tela
-        )
-    ],
-    style={'textAlign': 'center'}  # Centraliza todo o conteúdo da página
-)
-
-if __name__ == '__main__':
-    app.run(debug=True)
+if __name__ == "__main__":
+    main()
