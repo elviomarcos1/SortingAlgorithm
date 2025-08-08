@@ -1,84 +1,31 @@
-# Comparação de Algoritmos de Ordenação
+📊 Comparison of Sorting Algorithms
+This project was developed to compare the efficiency of three sorting algorithms: Heap Sort, Selection Sort, and Insertion Sort. The comparison is based on executing these algorithms over randomly generated datasets of varying sizes. For visualizing the results, we use interactive graphs created with the help of the Dash, Plotly, and Pandas libraries.
 
-Este projeto foi desenvolvido para comparar a eficiência de três algoritmos de ordenação: **Heap Sort**, **Selection Sort** e **Insertion Sort**. A comparação é feita a partir da execução desses algoritmos sobre um conjunto de dados aleatórios gerados automaticamente, com diferentes tamanhos. Para visualização dos resultados, utilizamos gráficos interativos com a ajuda das bibliotecas **Dash**, **Plotly** e **Pandas**.
+🧩 Project Description
+The main goal of this project is to analyze and compare the performance of the sorting algorithms mentioned above. To achieve this, we followed these steps:
 
-## Descrição do Projeto
+1. Random Data Generation
 
-O objetivo principal deste projeto é analisar e comparar o desempenho dos algoritmos de ordenação mencionados acima. Para isso, seguimos os seguintes passos:
+Created a script that generates random datasets.
 
-1. **Geração de Dados Aleatórios**:
-   - Criamos um arquivo que gera conjuntos de dados aleatórios.
-   - Os tamanhos dos conjuntos variam de 200 a 5000, em intervalos de 200.
+Dataset sizes vary from 200 to 5000, in increments of 200.
 
-2. **Algoritmos de Ordenação**:
-   - **Heap Sort**: Um algoritmo eficiente baseado em estruturas de heap.
-   - **Selection Sort**: Um algoritmo simples de ordenação por seleção.
-   - **Insertion Sort**: Um algoritmo de ordenação por inserção, geralmente eficiente para pequenos conjuntos de dados.
+2. Sorting Algorithms
 
-3. **Execução dos Algoritmos**:
-   - Cada algoritmo é executado em um número crescente de dados aleatórios, começando com 200 até 5000 dados.
-   - Medimos o tempo de execução de cada algoritmo para cada tamanho de conjunto de dados.
+Heap Sort: An efficient algorithm based on heap data structures.
 
-4. **Visualização dos Resultados**:
-   - Usamos as bibliotecas **Dash**, **Plotly** e **Pandas** para organizar os dados coletados e criar gráficos interativos.
-   - Os gráficos são exibidos em uma escala **semilogarítmica**, facilitando a comparação do desempenho dos algoritmos.
+Selection Sort: A simple sorting algorithm based on selection.
 
-## Tecnologias Utilizadas
+Insertion Sort: An insertion-based sorting algorithm, generally efficient for small datasets.
 
-- **Python**: Linguagem de programação usada no desenvolvimento do projeto.
-- **Dash**: Framework para a criação de web apps interativos em Python.
-- **Plotly**: Biblioteca utilizada para criar os gráficos interativos.
-- **Pandas**: Usada para manipulação e organização de dados.
-- **NumPy**: Utilizada para geração de números e arrays aleatórios.
+3.Algorithm Execution
 
-## Como Executar o Projeto
+Each algorithm is run on progressively larger random datasets, starting from 200 up to 5000 elements.
 
-Siga os passos abaixo para executar o projeto localmente:
+We measure the execution time of each algorithm for each dataset size.
 
-1. Clone o repositório:
+4. Results Visualization
 
-   ```bash
-   git clone https://github.com/seu-usuario/seu-repositorio.git
-   ```
-2. Navegue até o diretório do projeto:
-   ```bash
-   cd nome-do-projeto
-   ```
-3. Crie um ambiente virtual (opcional, mas recomendado):
-   - **Windows**:
-   ```
-   python -m venv venv
-   venv\Scripts\activate
-   ```
-   - **Linux**:
-   ```
-   python3 -m venv venv
-   source venv/bin/activate
-   ```
-4. Instale as dependências necessárias:
-   ```
-   pip install -r requirements.txt
-   ```
-5. Execute o aplicativo:
-   ```
-   python app.py
-   ```
+We use Dash, Plotly, and Pandas to organize the collected data and create interactive charts.
 
-##Estrutura do projeto
-```
-/nome-do-projeto
-│
-├── /algorithms
-│   ├── heap_sort.py
-│   ├── selection_sort.py
-│   └── insertion_sort.py
-│
-├── /data
-│   └── data_generator.py
-│
-├── app.py
-├── requirements.txt
-└── README.md
-```
-
-   
+The charts are displayed on a semi-logarithmic scale, which facilitates comparison of algorithm performance.
