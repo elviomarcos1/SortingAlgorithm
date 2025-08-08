@@ -18,7 +18,7 @@ Selection Sort: A simple sorting algorithm based on selection.
 
 Insertion Sort: An insertion-based sorting algorithm, generally efficient for small datasets.
 
-3.Algorithm Execution
+3. Algorithm Execution
 
 Each algorithm is run on progressively larger random datasets, starting from 200 up to 5000 elements.
 
